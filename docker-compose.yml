@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  # Service 1: PostgreSQL Database
+  postgres_db:
+    image: postgres:15-alpine  
+    container_name: postgres_RakaAlpiansyah
+    restart: always
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - "22112:5432" 
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  # Service 2: pgAdmin4 Management Tool
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: pgadmin_RakaAlpiansyah
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@example.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "44112:80" 
+    depends_on:
+      - postgres_db
+
+volumes:
+  postgres_data:
